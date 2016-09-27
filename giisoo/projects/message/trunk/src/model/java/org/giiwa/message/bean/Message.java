@@ -59,6 +59,14 @@ public class Message extends Bean {
 
   // ------------
 
+  public static long send(long to, long from, String content) {
+    return create(V.create("to", to).set("_from", from).set("content", content).set("flag", FLAG_NEW));
+  }
+
+  public static int mark(long id, int flag) {
+    return update(id, V.create("flag", flag));
+  }
+
   public static long create(V v) {
     /**
      * generate a unique id in distribute system
@@ -101,4 +109,11 @@ public class Message extends Bean {
     Helper.delete(id, Message.class);
   }
 
+  public static long count(long to) {
+    return Helper.count(W.create("to", to), Message.class);
+  }
+
+  public static long unread(long to) {
+    return Helper.count(W.create("to", to).and("flag", FLAG_NEW), Message.class);
+  }
 }
