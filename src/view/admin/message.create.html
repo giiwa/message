@@ -1,16 +1,16 @@
 
-<div class='head'>$lang.get('demo.create.title')</div>
+<div class='head'>$lang.get('message.create.title')</div>
 
 #parse('/widget/widget.message.html')
 
 <div class='tabs'>
-	<a href='/admin/demo' >$lang.get('a.demo')</a>
-	<a href='/admin/demo/create' class='selected'>$lang.get('a.create')</a>
+	<a href='/admin/message' >$lang.get('a.message')</a>
+	<a href='/admin/message/create' class='selected'>$lang.get('a.create')</a>
 </div>
 
-<form action='/admin/demo/create'  method='post' class='form' enctype="multipart/form-data">
-	<div><label><h3>$lang.get('demo.name')(<r>*</r>):</h3><input type='text' name='name' value="$!name"/></label></div>
-	<div><label><h3>$lang.get('demo.content'):</h3><textarea name='content'>$!content</textarea></label></div>
+<form action='/admin/message/create'  method='post' class='form' enctype="multipart/form-data">
+	<div><label><h3>$lang.get('message.name')(<r>*</r>):</h3><input type='text' name='name' value="$!name"/></label></div>
+	<div><label><h3>$lang.get('message.content'):</h3><textarea name='content'>$!content</textarea></label></div>
 
 	<button type='submit'>$lang.get('btn.create')</button>
 </form>
