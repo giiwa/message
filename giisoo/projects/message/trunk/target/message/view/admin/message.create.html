@@ -1,0 +1,32 @@
+
+<div class='head'>$lang.get('message.create.title')</div>
+
+#parse('/widget/widget.message.html')
+
+<div class='tabs'>
+	<a href='/admin/message' >$lang.get('a.message')</a>
+	<a href='/admin/message/create' class='selected'>$lang.get('a.create')</a>
+</div>
+
+<form action='/admin/message/create'  method='post' class='form' enctype="multipart/form-data">
+	<div><label><h3>$lang.get('message.to')(<r>*</r>):</h3>
+		<select name="to" required>
+			#foreach($u in $users)
+			<option value='$u.id' #if($to == $u.id) selected #end>$!u.name</option>
+			#end
+		</select>
+		</label></div>
+	<div><label><h3>$lang.get('message.from'):</h3>
+		<select name="from">
+			<option value=''></option>
+			#foreach($u in $users)
+			<option value='$u.id' #if($from == $u.id) selected #end>$!u.name</option>
+			#end
+		</select>
+		</label></div>
+	<div><label><h3>$lang.get('message.category')<r>*</r></h3>:<input type='text' name='category'/></label></div>
+	<div><label><h3>$lang.get('message.content'):</h3><textarea name='content'>$!content</textarea></label></div>
+
+	<button type='submit'>$lang.get('btn.create')</button>
+</form>
+

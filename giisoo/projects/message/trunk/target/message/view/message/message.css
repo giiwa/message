@@ -1,0 +1,11 @@
+.widget.message{
+	position: absolute;
+	width: 100px;
+	max-height: 200px;
+	background: #eee;
+	color: #fff;
+}
+.widget.message ul{
+	list-style: none;
+}
+

@@ -18,12 +18,19 @@ public class message extends Model {
     int n = this.getInt("n", 20, "number.per.page");
 
     W q = W.create();
-    String name = this.getString("name");
 
-    if (!X.isEmpty(name) && path == null) {
-      q.and("name", name, W.OP_LIKE);
-      this.set("name", name);
+    long to = this.getLong("to");
+    if (to > 0 && X.isEmpty(path)) {
+      q.and("to", to);
+      this.set("to", to);
     }
+
+    long from = this.getLong("from");
+    if (from > 0 && X.isEmpty(path)) {
+      q.and("_from", to);
+      this.set("from", to);
+    }
+
     Beans<Message> bs = Message.load(q, s, n);
     this.set(bs, s, n);
 
