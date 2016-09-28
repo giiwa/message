@@ -144,6 +144,10 @@ public class Message extends Bean {
     return Helper.update(id, v, Message.class);
   }
 
+  public static int update(W q, V v) {
+    return Helper.update(q, v, Message.class);
+  }
+
   public static Beans<Message> load(W q, int s, int n) {
     return Helper.load(q, s, n, Message.class);
   }
@@ -159,4 +163,9 @@ public class Message extends Bean {
   public static long unread(long to) {
     return Helper.count(W.create("to", to).and("flag", FLAG_NEW), Message.class);
   }
+
+  public static void cleanup() {
+    Helper.delete(W.create("deleted_to", 1).and("deleted_from", 1), Message.class);
+  }
+
 }

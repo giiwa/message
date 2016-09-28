@@ -17,3 +17,9 @@ message.flag_4=Forward
 message.category=Category
 message.detail.title=Message detail
 message.you_have_unread=You have<a class='r' href='/message'>%d</a>new message
+a.forward=Forward
+a.inbox=Inbox
+a.outbox=Outbox
+message.inbox.title=Message in inbox
+message.send.title=Message in outbox
+message.title=Title

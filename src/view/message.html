@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>$lang.get('browser.title')</title>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<meta name="description" content="$lang.get('browser.description')" >
+
+	<link rel="shortcut icon" href="/giiwa.png" type="image/png" />
+
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen">
+	<link href='/css/icons.css' rel='stylesheet' />
+	<link href='/css/tablesorter.css' rel='stylesheet' />
+	<link href='/css/giiwa.css' rel='stylesheet' />
+
+	<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+
+</head>
+<body>
+<div class='header'>
+	<h1>内部消息 Demo</h1>
+	<div class='owner'>Welcome, $me.nickname</div>
+	<a href="javascript:;" onclick="$('#panel .content').iframe('/message/send')">发消息</a>
+</div>
+
+<div class='nav'>
+	<ul>
+		<li>
+			<a href='javascript:;' onclick="$('#panel .content').iframe('/message/inbox')">收件箱</a>
+		</li>
+		<li>
+			<a href='javascript:;' onclick="$('#panel .content').iframe('/message/outbox')">发件箱</a>
+		</li>
+	</ul>
+	
+</div>
+<div id='panel'>
+	<div class='content'></div>
+</div>
+
+<div id="processing" style="display: none;">
+	<div class="bg"></div>
+	<div class="img">
+		<img src="/images/loading2.gif">
+	</div>
+</div>
+
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/jquery.iframe.js"></script>
+
+<script>
+var processing = {
+		show:function(){
+			$('#processing').show();
+		},
+		hide:function(){
+			$('#processing').hide();
+		}
+	};
+</script>
+
+$!global.get('site.counter')
+</body>
+</html>
