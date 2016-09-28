@@ -39,7 +39,7 @@ public class message extends Model {
     }
     Beans<Message> bs = Message.load(q, s, n);
     this.set(bs, s, n);
-
+    this.query.path("/message/inbox");
     this.show("/message/inbox.html");
   }
 
@@ -89,14 +89,72 @@ public class message extends Model {
 
     Beans<Message> bs = Message.load(q, s, n);
     this.set(bs, s, n);
+    this.query.path("/message/outbox");
 
     this.show("/message/outbox.html");
   }
 
+  @Path(path = "lookup", login = true)
+  public void lookup() {
+
+  }
+
+  @Path(path = "reply", login = true)
+  public void reply() {
+    long id = this.getLong("id");
+    Message m = Message.load(id);
+    if (m != null && m.getTo() == login.getId()) {
+      this.set("reply", id);
+      String content = m.getContent();
+      this.set("category", m.getCategory());
+      this.set("to", m.getFrom());
+      this.set("content", "\r\n==================\r\n" + content);
+      this.show("/message/send.html");
+
+    } else {
+      this.print("failed");
+    }
+  }
+
+  @Path(path = "forward", login = true)
+  public void forward() {
+    long id = this.getLong("id");
+    Message m = Message.load(id);
+    if (m != null && m.getTo() == login.getId()) {
+      this.set("forward", id);
+      String content = m.getContent();
+      this.set("category", m.getCategory());
+      this.set("to", m.getFrom());
+      this.set("content", "\r\n==================\r\n" + content);
+      this.show("/message/send.html");
+
+    } else {
+      this.print("failed");
+    }
+
+  }
+
   @Path(path = "send", login = true)
   public void send() {
-    if(method.isPost()) {
-      
+    if (method.isPost()) {
+      long to = this.getLong("to");
+      String category = this.getString("category");
+      String content = this.getHtml("content");
+      V v = V.create("_from", login.getId()).set("to", to).set("category", category).set("content", content).set("flag",
+          Message.FLAG_NEW);
+      Message.create(v);
+      outbox();
+
+      long reply = this.getLong("reply");
+      if (reply > 0) {
+        Message.update(reply, V.create("flag", Message.FLAG_REPLY));
+      }
+      long forward = this.getLong("forward");
+      if (forward > 0) {
+        Message.update(forward, V.create("flag", Message.FLAG_FORWARD));
+      }
+
+      return;
     }
     this.show("/message/send.html");
   }

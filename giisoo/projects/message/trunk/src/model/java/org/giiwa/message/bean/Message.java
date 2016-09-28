@@ -42,6 +42,9 @@ public class Message extends Bean {
   @Column(name = "category")
   String                    category;
 
+  @Column(name = "title")
+  String                    title;
+
   @Column(name = "content")
   String                    content;
 
@@ -91,6 +94,10 @@ public class Message extends Bean {
 
   public int getFlag() {
     return flag;
+  }
+
+  public String getTitle() {
+    return title;
   }
 
   public String getContent() {

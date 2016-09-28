@@ -36,6 +36,7 @@
 		<td>$!lang.truncate($!f.content, 100)</td>
 		<td>$!lang.format($f.created, 'yyyy-MM-dd HH:mm')</td>
 		<td>
+			<a class='btn btn-success btn-xs' href='/message/forward?id=$f.id'>$lang.get('a.forward')</a>
 			<a class='btn btn-success btn-xs' href='/message/reply?id=$f.id'>$lang.get('a.reply')</a>
 			<a class='btn btn-info btn-xs' href='/message/detail?id=$f.id'>$lang.get('a.detail')</a>
 			<a class='btn btn-danger btn-xs' href='javascript:;' onclick='_delete("$f.id", this);'>$lang.get('a.delete')</a>
