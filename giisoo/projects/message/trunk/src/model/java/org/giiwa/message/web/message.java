@@ -8,6 +8,7 @@ import org.giiwa.core.bean.Helper;
 import org.giiwa.core.bean.Helper.V;
 import org.giiwa.core.bean.Helper.W;
 import org.giiwa.core.json.JSON;
+import org.giiwa.core.task.Task;
 import org.giiwa.core.bean.X;
 import org.giiwa.framework.bean.User;
 import org.giiwa.framework.web.Model;
@@ -16,9 +17,13 @@ import org.giiwa.message.bean.Message;
 
 public class message extends Model {
 
+  @Path(login = true)
+  public void onGet() {
+    this.show("message.html");
+  }
+
   @Path(path = "popup", login = true)
   public void popup() {
-    long total = Message.count(login.getId());
     long unread = Message.unread(login.getId());
     List<String> list = new ArrayList<String>();
     if (unread > 0) {
@@ -39,9 +44,25 @@ public class message extends Model {
       q.and("content", name, W.OP_LIKE);
       this.set("name", name);
     }
-    Beans<Message> bs = Message.load(q, s, n);
+    final Beans<Message> bs = Message.load(q, s, n);
     bs.setTotal((int) Helper.count(q, Message.class));
     this.set(bs, s, n);
+
+    new Task() {
+      @Override
+      public void onExecute() {
+        // mark them read
+        List<Message> l1 = bs.getList();
+        if (l1 != null && l1.size() > 0) {
+          for (Message m : l1) {
+            if (m.getFlag() == Message.FLAG_NEW) {
+              Message.update(m.getId(), V.create("flag", Message.FLAG_READ));
+            }
+          }
+        }
+      }
+    }.schedule(10);
+
     this.query.path("/message/inbox");
     this.show("/message/inbox.html");
   }
@@ -114,11 +135,6 @@ public class message extends Model {
     this.query.path("/message/outbox");
 
     this.show("/message/outbox.html");
-  }
-
-  @Path(path = "lookup", login = true)
-  public void lookup() {
-
   }
 
   @Path(path = "reply", login = true)
