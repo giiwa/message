@@ -1,0 +1,18 @@
+<link href="/css/giiwa.css" rel="stylesheet" type="text/css"/>
+
+<div class='head'>$lang.get('message.send.title')</div>
+
+<form action='/message/send'  method='post' class='form' enctype="multipart/form-data">
+	<div><label><h3>$lang.get('message.to')(<r>*</r>):</h3>
+		<select name="to" required>
+			#foreach($u in $users)
+			<option value='$u.id' #if($to == $u.id) selected #end>$!u.name</option>
+			#end
+		</select>
+		</label></div>
+	<div><label><h3>$lang.get('message.category')<r>*</r></h3>:<input type='text' name='category'/></label></div>
+	<div><label><h3>$lang.get('message.content'):</h3><textarea name='content'>$!content</textarea></label></div>
+
+	<button type='submit'>$lang.get('btn.send')</button>
+</form>
+

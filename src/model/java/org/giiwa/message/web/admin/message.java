@@ -49,15 +49,6 @@ public class message extends Model {
     this.show("/admin/message.detail.html");
   }
 
-  @Path(path = "delete", login = true, access = "access.config.admin")
-  public void delete() {
-    long id = this.getLong("id");
-    Message.delete(id);
-    JSON jo = new JSON();
-    jo.put(X.STATE, 200);
-    this.response(jo);
-  }
-
   @Path(path = "create", login = true, access = "access.config.admin")
   public void create() {
     if (method.isPost()) {
