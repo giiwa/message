@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module version="1.0">
+  <id>318</id>
+  <name>message</name>
+  <package>org.giiwa.message.web</package>
+  <screenshot>/images/demo_screenshot.png</screenshot>
+  <version>1.0.1</version>
+  <build>1609280933</build>
+  <enabled>true</enabled>
+  <readme>internal message module</readme>
+  <listener>
+    <class>org.giiwa.message.web.MessageListener</class>
+  </listener>
+  <setting>
+  </setting>
+  <filter>
+  </filter>
+  <depends>
+  </depends>
+</module>

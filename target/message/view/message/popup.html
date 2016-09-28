@@ -1,0 +1,10 @@
+#if($list && $list.size() > 0)
+<link href="/message/message.css" rel="stylesheet" type="text/css"/>
+<div class='widget message'>
+	<ul>
+	#foreach($p in $list)
+		<li>$p</li>
+	#end
+	</ul>
+<div>
+#end
