@@ -8,12 +8,13 @@ message.flag=标志
 message.from=来源
 message.id=Id
 message.index.title=消息管理
+message.outbox.title=发送的消息
 message.to=发送给
 message.updated=更新时间
-message.flag_1=New
-message.flag_2=Read
-message.flag_3=Replied
-message.flag_4=Forward
+message.flag_1=新
+message.flag_2=已读
+message.flag_3=已回复
+message.flag_4=已转发
 message.category=分类
 message.detail.title=消息详情
 message.you_have_unread=你有<a class='r' href='/message'>%d</a>条新消息

@@ -30,6 +30,9 @@ public class Message extends Bean {
   public static final int   FLAG_REPLY       = 3;
   public static final int   FLAG_FORWARD     = 4;
 
+  @Column(name = X.ID)
+  long                      id;
+
   @Column(name = "to")
   long                      to;
 
@@ -53,6 +56,10 @@ public class Message extends Bean {
 
   @Column(name = "deleted_from")
   int                       deleted_from;
+
+  public long getId() {
+    return id;
+  }
 
   public int getDeleted_to() {
     return deleted_to;
@@ -157,11 +164,11 @@ public class Message extends Bean {
   }
 
   public static long count(long to) {
-    return Helper.count(W.create("to", to), Message.class);
+    return Helper.count(W.create("to", to).and("deleted_to", 1, W.OP_NEQ), Message.class);
   }
 
   public static long unread(long to) {
-    return Helper.count(W.create("to", to).and("flag", FLAG_NEW), Message.class);
+    return Helper.count(W.create("to", to).and("deleted_to", 1, W.OP_NEQ).and("flag", FLAG_NEW), Message.class);
   }
 
   public static void cleanup() {
