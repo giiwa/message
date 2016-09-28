@@ -9,7 +9,7 @@
 
 <div class='search'>
 	<form action='/message/inbox' method='get' #if($currentpage>0) style='display:none' #end >
-		<span><label><h3>$lang.get('message.content'):</h3><input type='text' name='name' value="$!name" placeholder="name/nickname"/></label></span>
+		<span><label><h3>$lang.get('message.content'):</h3><input type='text' name='name' value="$!name"/></label></span>
 		<button type='submit' class='btns1 icon icon-search'></button>
 	</form>
 	
@@ -33,9 +33,10 @@
 	<tr>
 		<td>$lang.get("message.flag_$f.flag")</td>
 		<td>$!f.from_obj.nickname</td>
-		<td>$lang.truncate($!f.content, 100)</td>
-		<td>$lang.foramt($f.created, 'yyyy-MM-dd HH:mm')</td>
+		<td>$!lang.truncate($!f.content, 100)</td>
+		<td>$!lang.format($f.created, 'yyyy-MM-dd HH:mm')</td>
 		<td>
+			<a class='btn btn-success btn-xs' href='/message/reply?id=$f.id'>$lang.get('a.reply')</a>
 			<a class='btn btn-info btn-xs' href='/message/detail?id=$f.id'>$lang.get('a.detail')</a>
 			<a class='btn btn-danger btn-xs' href='javascript:;' onclick='_delete("$f.id", this);'>$lang.get('a.delete')</a>
 		</td>
@@ -47,14 +48,14 @@
  #parse('/widget/goto.page.html')
 
 <div class='btns'>
-	<a class='btn btn-success' href='/message/create'>$lang.get('a.create')</a>
+	<a class='btn btn-success' href='/message/send'>$lang.get('a.create')</a>
 </div>
 
 <script>
 function _delete(id, o) {
 	if(confirm("$lang.get('title.are_u_sure_delete')")) {
 		processing && processing.show();
-		$.post('/message/delete', {id:id}, function(d){
+		$.post('/message/inbox/delete', {id:id}, function(d){
 			processing && processing.hide();
 			if(d.state == 200) {
 				$(o).parent().parent().remove();

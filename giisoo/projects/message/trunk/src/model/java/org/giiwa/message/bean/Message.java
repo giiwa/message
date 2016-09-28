@@ -45,6 +45,20 @@ public class Message extends Bean {
   @Column(name = "content")
   String                    content;
 
+  @Column(name = "deleted_to")
+  int                       deleted_to;
+
+  @Column(name = "deleted_from")
+  int                       deleted_from;
+
+  public int getDeleted_to() {
+    return deleted_to;
+  }
+
+  public int getDeleted_from() {
+    return deleted_from;
+  }
+
   public long getTo() {
     return to;
   }
@@ -129,10 +143,6 @@ public class Message extends Bean {
 
   public static Message load(long id) {
     return Helper.load(id, Message.class);
-  }
-
-  public static void delete(long id) {
-    Helper.delete(id, Message.class);
   }
 
   public static long count(long to) {
