@@ -1,19 +1,16 @@
 
 <div class='head'>$lang.get('message.detail.title')</div>
 
-#parse('/widget/widget.message.html')
-
 <div class='tabs'>
 	<a href='/admin/message' >$lang.get('a.message')</a>
 	<a href='/admin/message/detail?id=$id' class='selected'>$lang.get('a.detail')</a>
 </div>
 
-<p><b>id:</b>$b.id</p>
-<p><b>to:</b>$!b.to, $!b.to_obj.name, $!b.to_obj.nickname</p>
-<p><b>from:</b>$!b.from, $!b.from_obj.name, $!b.from_obj.nickname</p>
-<p><b>flag:</b>$!b.flag</p>
-<p><b>category:</b>$!b.category</p>
-<p><b>title:</b>$!b.title</p>
-<p><b>content:</b>$!b.content</p>
-<p><b>updated:</b>$lang.format($b.updated, 'yyyy-MM-dd HH:mm:ss')</p>
-<p><b>created:</b>$lang.format($b.created, 'yyyy-MM-dd HH:mm:ss')</p>
+<p><b>Id:</b>$m.id</p>
+<p><b>$lang.get('message.to'):</b>$!m.to, $!m.to_obj.name, $!m.to_obj.nickname</p>
+<p><b>$lang.get('message.from'):</b>$!m.from, $!m.from_obj.name, $!m.from_obj.nickname</p>
+<p><b>$lang.get('message.flag'):</b>$!m.flag</p>
+<p><b>$lang.get('message.category'):</b>$!m.category</p>
+<p><b>$lang.get('message.title'):</b>$!m.title</p>
+<p><b>$lang.get('message.content'):</b>$!m.content</p>
+<p><b>$lang.get('message.created'):</b>$lang.format($m.created, 'yyyy-MM-dd HH:mm:ss')</p>

@@ -1,25 +1,11 @@
 
-<div class='head'>$lang.get('message.send.title')</div>
+<div class='head'>$lang.get('message.detail.title')</div>
 
-<form action='/message/send'  method='post' class='form' enctype="multipart/form-data">
-	<input type='hidden' name="reply" value="$!reply" />
-	<input type='hidden' name="forward" value="$!forward" />
-	
-	<div><label><h3>$lang.get('message.to')(<r>*</r>):</h3>
-		#if($to)
-		<input type='hidden' name='to' value='$to'/><i>$to_obj.nickname</i>
-		#else
-		<select name="to" required>
-			#foreach($u in $users)
-			<option value='$u.id' #if($to == $u.id) selected #end>$!u.name</option>
-			#end
-		</select>
-		#end
-		</label></div>
-	<div><label><h3>$lang.get('message.category')</h3>:<input type='text' name='category' value="$!category"/></label></div>
-	<div><label><h3>$lang.get('message.title')</h3>:<input type='text' name='title' value="$!title"/></label></div>
-	<div><label><h3>$lang.get('message.content'):</h3><textarea name='content'>$!content</textarea></label></div>
-
-	<button type='submit'>$lang.get('btn.send')</button>
-</form>
-
+<p><b>Id:</b>$m.id</p>
+<p><b>$lang.get('message.to'):</b>$!m.to, $!m.to_obj.name, $!m.to_obj.nickname</p>
+<p><b>$lang.get('message.from'):</b>$!m.from, $!m.from_obj.name, $!m.from_obj.nickname</p>
+<p><b>$lang.get('message.flag'):</b>$!m.flag</p>
+<p><b>$lang.get('message.category'):</b>$!m.category</p>
+<p><b>$lang.get('message.title'):</b>$!m.title</p>
+<p><b>$lang.get('message.content'):</b>$!m.content</p>
+<p><b>$lang.get('message.created'):</b>$lang.format($m.created, 'yyyy-MM-dd HH:mm:ss')</p>
