@@ -34,7 +34,7 @@ public class message extends Model {
     Beans<Message> bs = Message.load(q, s, n);
     this.set(bs, s, n);
 
-    Beans<User> bs1 = User.load(W.create().and("id", 0, W.OP_GT), 0, 1000);
+    Beans<User> bs1 = User.load(W.create(), 0, 1000);
     this.set("users", bs1 == null ? null : bs1.getList());
 
     this.show("/admin/message.index.html");
@@ -76,7 +76,7 @@ public class message extends Model {
       return;
     }
 
-    Beans<User> bs = User.load(W.create().and("id", 0, W.OP_GT), 0, 1000);
+    Beans<User> bs = User.load(W.create(), 0, 1000);
     this.set("users", bs == null ? null : bs.getList());
 
     this.show("/admin/message.create.html");
