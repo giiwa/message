@@ -41,6 +41,7 @@
 			<th>$lang.get('message.from')</th>
 			<th>$lang.get('message.flag')</th>
 			<th>$lang.get('message.category')</th>
+			<th>$lang.get('message.title')</th>
 			<th>$lang.get('message.content')</th>
 			<th>$lang.get('message.updated')</th>
 			<th>$lang.get('message.created')</th>
@@ -55,6 +56,7 @@
 		<td>$!f.from_obj.name</td>
 		<td>$lang.get("message.flag_$f.flag")</td>
 		<td>$!f.category</td>
+		<td>$!lang.truncate($f.title, 30)</td>
 		<td>$!lang.truncate($f.content, 30)</td>
 		<td>$!lang.format($f.updated, 'yyyy-MM-dd HH:mm:ss')</td>
 		<td>$!lang.format($f.created, 'yyyy-MM-dd HH:mm:ss')</td>

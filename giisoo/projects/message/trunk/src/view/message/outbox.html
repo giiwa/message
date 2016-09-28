@@ -1,9 +1,9 @@
 
-<div class='head'>$lang.get('message.inbox.title')</div>
+<div class='head'>$lang.get('message.outbox.title')</div>
 
 <div class='tabs'>
-	<a href='/message/inbox' class='selected'>$lang.get('a.inbox')</a>
-	<a href='/message/outbox' >$lang.get('a.outbox')</a>
+	<a href='/message/inbox'>$lang.get('a.inbox')</a>
+	<a href='/message/outbox' class='selected'>$lang.get('a.outbox')</a>
 </div>
 
 <div class='search'>
@@ -20,8 +20,7 @@
 <table class='tablesorter nospace' border="0" cellpadding="0" cellspacing="1">
 	<thead>
 		<tr>
-			<th>$lang.get('message.flag')</th>
-			<th>$lang.get('message.from')</th>
+			<th>$lang.get('message.to')</th>
 			<th>$lang.get('message.category')</th>
 			<th>$lang.get('message.title')</th>
 			<th>$lang.get('message.content')</th>
@@ -32,15 +31,12 @@
 	<tbody>
 #foreach($f in $list)
 	<tr>
-		<td>$lang.get("message.flag_$f.flag")</td>
-		<td>$!f.from_obj.nickname</td>
+		<td>$!f.to_obj.nickname</td>
 		<td>$!f.category</td>
 		<td>$!lang.truncate($!f.title, 30)</td>
 		<td>$!lang.truncate($!f.content, 100)</td>
 		<td>$!lang.format($f.created, 'yyyy-MM-dd HH:mm')</td>
 		<td>
-			<a class='btn btn-success btn-xs' href='/message/forward?id=$f.id'>$lang.get('a.forward')</a>
-			<a class='btn btn-success btn-xs' href='/message/reply?id=$f.id'>$lang.get('a.reply')</a>
 			<a class='btn btn-info btn-xs' href='/message/detail?id=$f.id'>$lang.get('a.detail')</a>
 			<a class='btn btn-danger btn-xs' href='javascript:;' onclick='_delete("$f.id", this);'>$lang.get('a.delete')</a>
 		</td>
@@ -60,7 +56,7 @@
 function _delete(id, o) {
 	if(confirm("$lang.get('title.are_u_sure_delete')")) {
 		processing && processing.show();
-		$.post('/message/inbox/delete', {id:id}, function(d){
+		$.post('/message/outbox/delete', {id:id}, function(d){
 			processing && processing.hide();
 			if(d.state == 200) {
 				$(o).parent().parent().remove();
@@ -73,7 +69,7 @@ function _delete(id, o) {
 function _deleteall() {
 	if(confirm("$lang.get('title.are_u_sure_delete')")) {
 		processing && processing.show();
-		$.post('/message/inbox/deleteall', {}, function(d){
+		$.post('/message/outbox/deleteall', {}, function(d){
 			processing && processing.hide();
 			reload();
 		});

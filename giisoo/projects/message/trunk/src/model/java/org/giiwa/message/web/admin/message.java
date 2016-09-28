@@ -57,6 +57,7 @@ public class message extends Model {
       v.set("_from", from);
       v.set("to", this.getLong("to"));
       v.set("category", this.getString("category"));
+      v.set("title", this.getString("title"));
       v.set("content", this.getHtml("content"));
       v.set("flag", Message.FLAG_NEW);
 

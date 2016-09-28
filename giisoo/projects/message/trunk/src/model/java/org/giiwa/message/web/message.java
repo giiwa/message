@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.giiwa.core.bean.Beans;
+import org.giiwa.core.bean.Helper;
 import org.giiwa.core.bean.Helper.V;
 import org.giiwa.core.bean.Helper.W;
 import org.giiwa.core.json.JSON;
 import org.giiwa.core.bean.X;
+import org.giiwa.framework.bean.User;
 import org.giiwa.framework.web.Model;
 import org.giiwa.framework.web.Path;
 import org.giiwa.message.bean.Message;
@@ -38,6 +40,7 @@ public class message extends Model {
       this.set("name", name);
     }
     Beans<Message> bs = Message.load(q, s, n);
+    bs.setTotal((int) Helper.count(q, Message.class));
     this.set(bs, s, n);
     this.query.path("/message/inbox");
     this.show("/message/inbox.html");
@@ -56,6 +59,24 @@ public class message extends Model {
       jo.put(X.STATE, 201);
       jo.put(X.MESSAGE, "failed");
     }
+    this.response(jo);
+  }
+
+  @Path(path = "inbox/deleteall", login = true)
+  public void inbox_deleteall() {
+    JSON jo = JSON.create();
+    Message.update(W.create("to", login.getId()), V.create("deleted_to", 1).set("updated", V.ignore));
+    jo.put(X.STATE, 200);
+    jo.put(X.MESSAGE, "ok");
+    this.response(jo);
+  }
+
+  @Path(path = "outbox/deleteall", login = true)
+  public void outbox_deleteall() {
+    JSON jo = JSON.create();
+    Message.update(W.create("_from", login.getId()), V.create("deleted_to", 1).set("updated", V.ignore));
+    jo.put(X.STATE, 200);
+    jo.put(X.MESSAGE, "ok");
     this.response(jo);
   }
 
@@ -88,6 +109,7 @@ public class message extends Model {
     }
 
     Beans<Message> bs = Message.load(q, s, n);
+    bs.setTotal((int) Helper.count(q, Message.class));
     this.set(bs, s, n);
     this.query.path("/message/outbox");
 
@@ -108,8 +130,24 @@ public class message extends Model {
       String content = m.getContent();
       this.set("category", m.getCategory());
       this.set("to", m.getFrom());
+      this.set("to_obj", m.getFrom_obj());
+      this.set("title", "R//" + m.getTitle());
       this.set("content", "\r\n==================\r\n" + content);
       this.show("/message/send.html");
+
+    } else {
+      this.print("failed");
+    }
+  }
+
+  @Path(path = "detail", login = true)
+  public void detail() {
+    long id = this.getLong("id");
+    Message m = Message.load(id);
+    if (m != null && (m.getTo() == login.getId() || m.getFrom() == login.getId())) {
+
+      this.set("m", m);
+      this.show("/message/detail.html");
 
     } else {
       this.print("failed");
@@ -125,6 +163,8 @@ public class message extends Model {
       String content = m.getContent();
       this.set("category", m.getCategory());
       this.set("to", m.getFrom());
+      this.set("to_obj", m.getFrom_obj());
+      this.set("title", "F//" + m.getTitle());
       this.set("content", "\r\n==================\r\n" + content);
       this.show("/message/send.html");
 
@@ -140,8 +180,9 @@ public class message extends Model {
       long to = this.getLong("to");
       String category = this.getString("category");
       String content = this.getHtml("content");
-      V v = V.create("_from", login.getId()).set("to", to).set("category", category).set("content", content).set("flag",
-          Message.FLAG_NEW);
+      String title = this.getString("title");
+      V v = V.create("_from", login.getId()).set("title", title).set("to", to).set("category", category)
+          .set("content", content).set("flag", Message.FLAG_NEW);
       Message.create(v);
       outbox();
 
@@ -156,6 +197,10 @@ public class message extends Model {
 
       return;
     }
+
+    Beans<User> bs = User.load(W.create(), 0, 1000);
+    this.set("users", bs == null ? null : bs.getList());
+
     this.show("/message/send.html");
   }
 
