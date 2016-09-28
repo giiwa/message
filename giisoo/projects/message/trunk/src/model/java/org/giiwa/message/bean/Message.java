@@ -38,6 +38,9 @@ public class Message extends Bean {
   @Column(name = "flag")
   int                       flag;
 
+  @Column(name = "category")
+  String                    category;
+
   @Column(name = "content")
   String                    content;
 
@@ -47,6 +50,10 @@ public class Message extends Bean {
 
   public long getFrom() {
     return from;
+  }
+
+  public String getCategory() {
+    return category;
   }
 
   public int getFlag() {
