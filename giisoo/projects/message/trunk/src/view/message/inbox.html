@@ -1,0 +1,67 @@
+<link href="/css/giiwa.css" rel="stylesheet" type="text/css"/>
+
+<div class='head'>$lang.get('message.inbox.title')</div>
+
+<div class='tabs'>
+	<a href='/message/inbox' class='selected'>$lang.get('a.inbox')</a>
+	<a href='/message/outbox' >$lang.get('a.outbox')</a>
+</div>
+
+<div class='search'>
+	<form action='/message/inbox' method='get' #if($currentpage>0) style='display:none' #end >
+		<span><label><h3>$lang.get('message.content'):</h3><input type='text' name='name' value="$!name" placeholder="name/nickname"/></label></span>
+		<button type='submit' class='btns1 icon icon-search'></button>
+	</form>
+	
+	<div class='s1tab #if($currentpage>0) down #else up #end'>
+		<div class='arrow'></div>
+	</div>
+</div>
+
+<table class='tablesorter nospace' border="0" cellpadding="0" cellspacing="1">
+	<thead>
+		<tr>
+			<th>$lang.get('message.flag')</th>
+			<th>$lang.get('message.from')</th>
+			<th>$lang.get('message.content')</th>
+			<th>$lang.get('message.created')</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+#foreach($f in $list)
+	<tr>
+		<td>$lang.get("message.flag_$f.flag")</td>
+		<td>$!f.from_obj.nickname</td>
+		<td>$lang.truncate($!f.content, 100)</td>
+		<td>$lang.foramt($f.created, 'yyyy-MM-dd HH:mm')</td>
+		<td>
+			<a class='btn btn-info btn-xs' href='/message/detail?id=$f.id'>$lang.get('a.detail')</a>
+			<a class='btn btn-danger btn-xs' href='javascript:;' onclick='_delete("$f.id", this);'>$lang.get('a.delete')</a>
+		</td>
+	</tr>
+#end
+	</tbody>
+</table>
+
+ #parse('/widget/goto.page.html')
+
+<div class='btns'>
+	<a class='btn btn-success' href='/message/create'>$lang.get('a.create')</a>
+</div>
+
+<script>
+function _delete(id, o) {
+	if(confirm("$lang.get('title.are_u_sure_delete')")) {
+		processing && processing.show();
+		$.post('/message/delete', {id:id}, function(d){
+			processing && processing.hide();
+			if(d.state == 200) {
+				$(o).parent().parent().remove();
+			} else if(d.message){
+				$.error(d.message);
+			}
+		});
+	}
+}
+</script>

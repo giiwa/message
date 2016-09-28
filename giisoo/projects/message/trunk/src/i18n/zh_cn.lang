@@ -1,6 +1,6 @@
 a.message=消息
 menu.inbox=收件箱
-menu.message=消息
+menu.message=消息管理
 message.content=内容
 message.create.title=新建消息
 message.created=创建
@@ -16,3 +16,4 @@ message.flag_3=Replied
 message.flag_4=Forward
 message.category=分类
 message.detail.title=消息详情
+message.you_have_unread=你有<a class='r' href='/message'>%d</a>条新消息
