@@ -6,6 +6,7 @@ import org.giiwa.core.json.JSON;
 import org.giiwa.core.bean.Helper.V;
 import org.giiwa.core.bean.Helper.W;
 import org.giiwa.message.bean.Message;
+import org.giiwa.framework.bean.User;
 import org.giiwa.framework.web.Model;
 import org.giiwa.framework.web.Path;
 
@@ -25,6 +26,9 @@ public class message extends Model {
     }
     Beans<Message> bs = Message.load(q, s, n);
     this.set(bs, s, n);
+
+    Beans<User> bs1 = User.load(W.create().and("id", 0, W.OP_GT), 0, 1000);
+    this.set("users", bs1 == null ? null : bs1.getList());
 
     this.show("/admin/message.index.html");
   }
@@ -51,16 +55,22 @@ public class message extends Model {
   public void create() {
     if (method.isPost()) {
       V v = V.create();
-      v.set("_from", login.getId());
+      long from = this.getLong("from");
+      v.set("_from", from);
       v.set("to", this.getLong("to"));
+      v.set("category", this.getString("category"));
       v.set("content", this.getHtml("content"));
       v.set("flag", Message.FLAG_NEW);
+
       long id = Message.create(v);
 
       this.set(X.MESSAGE, lang.get("create.success"));
       onGet();
       return;
     }
+
+    Beans<User> bs = User.load(W.create().and("id", 0, W.OP_GT), 0, 1000);
+    this.set("users", bs == null ? null : bs.getList());
 
     this.show("/admin/message.create.html");
   }

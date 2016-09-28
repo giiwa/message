@@ -9,6 +9,7 @@ import org.giiwa.core.bean.Helper.W;
 import org.giiwa.core.bean.Column;
 import org.giiwa.core.bean.UID;
 import org.giiwa.core.bean.X;
+import org.giiwa.framework.bean.User;
 
 /**
  * Demo bean
@@ -48,8 +49,26 @@ public class Message extends Bean {
     return to;
   }
 
+  private User to_obj;
+
+  public User getTo_obj() {
+    if (to_obj == null) {
+      to_obj = User.loadById(to);
+    }
+    return to_obj;
+  }
+
   public long getFrom() {
     return from;
+  }
+
+  private User from_obj;
+
+  public User getFrom_obj() {
+    if (from_obj == null) {
+      from_obj = User.loadById(from);
+    }
+    return from_obj;
   }
 
   public String getCategory() {
