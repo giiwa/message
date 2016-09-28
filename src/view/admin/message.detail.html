@@ -9,7 +9,10 @@
 </div>
 
 <p><b>id:</b>$b.id</p>
-<p><b>name:</b>$!b.name</p>
-<p><b>name:</b><pre>$!b.content</pre></p>
+<p><b>to:</b>$!b.to, $!b.to_obj.name, $!b.to_obj.nickname</p>
+<p><b>from:</b>$!b.from, $!b.from_obj.name, $!b.from_obj.nickname</p>
+<p><b>flag:</b>$!b.flag</p>
+<p><b>category:</b>$!b.category</p>
+<p><b>content:</b>$!b.content</p>
 <p><b>updated:</b>$lang.format($b.updated, 'yyyy-MM-dd HH:mm:ss')</p>
 <p><b>created:</b>$lang.format($b.created, 'yyyy-MM-dd HH:mm:ss')</p>
