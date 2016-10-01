@@ -73,7 +73,7 @@ public class message extends Model {
     long id = this.getLong("id");
     Message m = Message.load(id);
     if (m != null && m.getFrom() == login.getId()) {
-      Message.update(id, V.create("deleted_from", 1).set("updated", V.ignore));
+      Message.update(id, V.create("deleted_from", 1).ignore("updated"));
       jo.put(X.STATE, 200);
       jo.put(X.MESSAGE, "ok");
     } else {
@@ -86,7 +86,7 @@ public class message extends Model {
   @Path(path = "inbox/deleteall", login = true)
   public void inbox_deleteall() {
     JSON jo = JSON.create();
-    Message.update(W.create("to", login.getId()), V.create("deleted_to", 1).set("updated", V.ignore));
+    Message.update(W.create("to", login.getId()), V.create("deleted_to", 1).ignore("updated"));
     jo.put(X.STATE, 200);
     jo.put(X.MESSAGE, "ok");
     this.response(jo);
@@ -95,7 +95,7 @@ public class message extends Model {
   @Path(path = "outbox/deleteall", login = true)
   public void outbox_deleteall() {
     JSON jo = JSON.create();
-    Message.update(W.create("_from", login.getId()), V.create("deleted_to", 1).set("updated", V.ignore));
+    Message.update(W.create("_from", login.getId()), V.create("deleted_to", 1).ignore("updated"));
     jo.put(X.STATE, 200);
     jo.put(X.MESSAGE, "ok");
     this.response(jo);
@@ -107,7 +107,7 @@ public class message extends Model {
     long id = this.getLong("id");
     Message m = Message.load(id);
     if (m != null && m.getTo() == login.getId()) {
-      Message.update(id, V.create("deleted_to", 1).set("updated", V.ignore));
+      Message.update(id, V.create("deleted_to", 1).ignore("updated"));
       jo.put(X.STATE, 200);
       jo.put(X.MESSAGE, "ok");
     } else {
